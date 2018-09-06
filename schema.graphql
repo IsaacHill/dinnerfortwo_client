@@ -3,6 +3,12 @@ schema {
   mutation: Mutations
 }
 
+type AddMenu {
+  ok: Boolean
+  error: String
+  menu: Menu
+}
+
 type CreateUser {
   user: User
   ok: Boolean
@@ -32,8 +38,10 @@ type IngredientEdge {
 type Menu implements Node {
   id: ID!
   name: String
+  created: String
   recipes(before: String, after: String, first: Int, last: Int): RecipeConnection
   users(before: String, after: String, first: Int, last: Int): UserConnection
+  menuId: Int
 }
 
 type MenuConnection {
@@ -60,6 +68,8 @@ type Mutations {
   createUser(email: String, name: String, password: String): CreateUser
   removeUser(email: String, name: String): RemoveUser
   userLogin(email: String, password: String): UserLogin
+  userInformation(email: String, token: String): UserInformation
+  addMenu(name: String, token: String, userID: Int): AddMenu
 }
 
 interface Node {
@@ -123,6 +133,7 @@ type User implements Node {
   lastLogin: String
   admin: Boolean
   menus(before: String, after: String, first: Int, last: Int): MenuConnection
+  userId: Int
 }
 
 type UserConnection {
@@ -145,8 +156,13 @@ type UserEdge {
   cursor: String!
 }
 
+type UserInformation {
+  message: String
+}
+
 type UserLogin {
   ok: Boolean
-  token: String
+  accessToken: String
+  refreshToken: String
   error: String
 }
