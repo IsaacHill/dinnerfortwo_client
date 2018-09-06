@@ -1,1 +1,1 @@
-web: yarn relay && yarn start
+web: yarn start
