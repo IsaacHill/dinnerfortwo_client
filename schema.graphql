@@ -9,6 +9,11 @@ type AddMenu {
   menu: Menu
 }
 
+type AddRecipe {
+  ok: Boolean
+  recipe: Recipe
+}
+
 type CreateUser {
   user: User
   ok: Boolean
@@ -33,6 +38,12 @@ type IngredientConnection {
 type IngredientEdge {
   node: Ingredient
   cursor: String!
+}
+
+input IngredientInput {
+  name: String
+  quantity: Float
+  unit: String
 }
 
 type Menu implements Node {
@@ -65,11 +76,12 @@ type MenuEdge {
 }
 
 type Mutations {
-  createUser(email: String, name: String, password: String): CreateUser
-  removeUser(email: String, name: String): RemoveUser
+  createUser(email: String!, name: String!, password: String!): CreateUser
+  removeUser(email: String!, name: String!): RemoveUser
   userLogin(email: String, password: String): UserLogin
   userInformation(email: String, token: String): UserInformation
-  addMenu(name: String, token: String, userID: Int): AddMenu
+  addMenu(name: String!, token: String!, userID: Int!): AddMenu
+  addRecipe(input: RecipeInput!): AddRecipe
 }
 
 interface Node {
@@ -96,7 +108,10 @@ type Recipe implements Node {
   createdOn: DateTime
   menuId: Int
   method: String
+  time: String
   serves: Int
+  equipment: String
+  comments: String
   ingredients(before: String, after: String, first: Int, last: Int): IngredientConnection
 }
 
@@ -118,6 +133,17 @@ type RecipeConnectionsEdge {
 type RecipeEdge {
   node: Recipe
   cursor: String!
+}
+
+input RecipeInput {
+  name: String
+  menuId: Int
+  method: String
+  time: String
+  serves: Int
+  equipment: String
+  comments: String
+  ingredients: [IngredientInput]
 }
 
 type RemoveUser {
