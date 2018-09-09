@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "babel-plugin-relay": "^1.6.2",
-    "graphql": "^14.0.0",
+    "graphql": "^14.0.2",
     "relay-compiler": "^1.6.2"
   },
   "dependencies": {
