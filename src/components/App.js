@@ -2,36 +2,75 @@ import React, { Component } from 'react';
 import logo from '../images/logo.svg';
 import '../styles/App.css';
 import LinkList from './LinkList'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import {UserConsumer} from './UserContext'
+import { userInfo } from 'os';
 //  return <LinkList />
 class App extends Component {
   render() {
     return (
       <Router>
-    <div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/users">Users</Link>
-        </li>
-        <li>
-          <Link to="/recipes">Recipes</Link>
-        </li>
-      </ul>
+        <div>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/users">Users</Link>
+            </li>
+            <li>
+              <Link to="/recipes">Recipes</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </ul>
 
-      <hr />
+          <hr />
 
-      <Route exact path="/" component={Home} />
-      <Route path="/users" component={LinkList} />
-      <Route path="/recipes" component={Recipes} />
-    </div>
-    </Router>
+          <Route exact path="/" component={Home} />
+          <PrivateRoute path="/users" component={LinkList} />
+          <Route path="/recipes" component={Recipes} />
+          <Route path='/login' component={connectedLogin} />
+        </div>
+      </Router>
     )
   }
 }
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <UserConsumer>
+      {user => (
+        <Route {...rest} render={props =>
+          user.isAuth ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+              }}
+            />
+        )} />
+      )}
+    </UserConsumer>
+    )
+
+
+const Login = (props) => {
+    let button = props.isAuth ? props.logout : props.login
+    let message = props.isAuth ? "log out you idiot" : 'log in my dude'
+    return (<div>
+      <p>You gotta do something dawg.</p>
+      <button onClick={() => button()}>{message}</button>
+    </div>)
+}
+
+const connectedLogin = () => (
+    <UserConsumer>
+      {user => (
+        <Login {...user}/>)}
+    </UserConsumer>
+)
 
 const Home = () => (
   <div>
