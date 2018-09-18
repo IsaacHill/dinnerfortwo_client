@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import {UserProvider} from './components/UserContext'
 
 const httpLink = createHttpLink({
   uri: 'https://dinner-for-two.herokuapp.com/graphql'
@@ -19,7 +20,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </ApolloProvider>,
   document.getElementById('root')
 )
