@@ -4,6 +4,8 @@ import '../styles/App.css';
 import LinkList from './LinkList'
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import {UserConsumer} from './UserContext'
+import RecipeList from './Recipe/RecipeList'
+import Recipe from './Recipe/Recipe'
 import { userInfo } from 'os';
 //  return <LinkList />
 class App extends Component {
@@ -30,8 +32,9 @@ class App extends Component {
 
           <Route exact path="/" component={Home} />
           <PrivateRoute path="/users" component={LinkList} />
-          <Route path="/recipes" component={Recipes} />
+          <Route exact path="/recipes" component={RecipeList} />
           <Route path='/login' component={connectedLogin} />
+          <Route path="/recipes/:id" component={Recipe}/>
         </div>
       </Router>
     )

@@ -15,7 +15,6 @@ export class UserProvider extends Component {
 
   login() {
     // setting timeout to mimic an async login
-    console.log(this)
     setTimeout(() => this.setState({ isAuth: true }), 1000)
   }
   

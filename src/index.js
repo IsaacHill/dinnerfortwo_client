@@ -10,7 +10,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import {UserProvider} from './components/UserContext'
 
 const httpLink = createHttpLink({
-  uri: 'https://dinner-for-two.herokuapp.com/graphql'
+  uri: 'http://127.0.0.1:5000/graphql'
 })
 
 const client = new ApolloClient({

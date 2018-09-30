@@ -25,9 +25,7 @@ render() {
         {({ loading, error, data }) => {
           if (loading) return <div>Fetching</div>
           if (error) return <div>Error</div>
-          console.log(data)
           const linksToRender = data.allUsers.edges
-        console.log(linksToRender)
           return (
             <div>
               {linksToRender.map(link => <Link key={link.node.id} link={link.node} />)}
